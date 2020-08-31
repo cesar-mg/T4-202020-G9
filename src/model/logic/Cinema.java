@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import controller.Controller;
 import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+import model.data_structures.Lista;
 
 
 /**
@@ -18,7 +18,7 @@ public class Cinema {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
+	private Lista datos;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
