@@ -208,4 +208,9 @@ public class Casting
 	{
 		editorName = nEditorName; 
 	}
+	public String castingNombres ( )
+	{
+		return "   Elenco: " + actorName1 +", " + actorName2 + ", " + actorName3 + ", " + actorName4 + ", " + actorName5+ ".";
+		
+	}
 }

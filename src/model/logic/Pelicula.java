@@ -230,6 +230,10 @@ public class Pelicula implements Comparable<Pelicula>
 	{
 		cast = nCast;
 	}
+	public String datosBasicos( )
+	{
+		return ""+ id + ", "+ title + ", " + generos + ", " + release_date + ", " + cast.castingNombres() ;
+	}
 
 
 	@Override

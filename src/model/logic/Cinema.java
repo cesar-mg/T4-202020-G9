@@ -84,14 +84,17 @@ public class Cinema {
 
 	public ArregloDinamico<Pelicula> darBuenasPeliculas(String director)
 	{
+		
 		ArregloDinamico<Pelicula> buenas = new ArregloDinamico<Pelicula>(50);
 		for(int i = 0; i < peliculas.size(); i++)
 		{
+			
 			Pelicula act = peliculas.getElement(i);
-			if(act.darCasting().directorName().equals(director) && act.darVote_average() >=6)
-			{
+			//System.out.println(act.darVote_average());
+		//System.out.println(act.darCasting().directorName());
+			if(act.darCasting().directorName().equals(director) && act.darVote_average() >=6.0)
 				buenas.addLast(act);
-			}
+			
 		}
 		return buenas;
 		
@@ -100,27 +103,27 @@ public class Cinema {
 	{
 
 		BufferedReader bufferLectura = null;
-		ArregloDinamico votacion = new ArregloDinamico<>(5000);
-
 
 		try{
 			bufferLectura = new BufferedReader(new FileReader(".//data\\SmallMoviesDetailsCleaned.csv"));
 
 			String linea = bufferLectura.readLine();
 			linea = bufferLectura.readLine();
-			while (linea!= null){
+			while (linea!= null)
+			{
 				String[] campos = linea.split(SEPARATOR);
 				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), campos[18], campos[19], campos[20], null);
 				peliculas.agregar(temp);
 				linea = bufferLectura.readLine();
-
 			}
+			bufferLectura.close();
 
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+
 
 		try{
 			bufferLectura = new BufferedReader(new FileReader("./data\\MoviesCastingRaw-small.csv"));
@@ -132,10 +135,13 @@ public class Cinema {
 			{
 				String[] campos = linea.split(SEPARATOR);
 				
-				Casting temp = new Casting (Integer.parseInt(campos[0]), campos[1],Integer.parseInt(campos[2]), campos[3], Integer.parseInt(campos[4]), campos[5], Integer.parseInt(campos[6]), campos[7], Integer.parseInt(campos[8]), campos[9], Integer.parseInt(campos[10]), Integer.parseInt(campos[11]), campos[12], Integer.parseInt(campos[13]), Integer.parseInt(campos[14]), campos[15], Integer.parseInt(campos[16]), campos[17], campos[18]);
+				Casting temp = new Casting (Integer.parseInt(campos[0]), campos[1],Integer.parseInt(campos[2]), campos[3], Integer.parseInt(campos[4]), campos[5], Integer.parseInt(campos[6]), campos[7], Integer.parseInt(campos[8]), campos[9], Integer.parseInt(campos[10]), Integer.parseInt(campos[11]), campos[12].trim(), Integer.parseInt(campos[13]), Integer.parseInt(campos[14]), campos[15], Integer.parseInt(campos[16]), campos[17], campos[18]);
 				peliculas.getElement(i).cambiarCast(temp);
+				i++;
+				linea = bufferLectura.readLine();
 			}
 		}
+		
 		catch(IOException e)
 		{
 			e.printStackTrace();

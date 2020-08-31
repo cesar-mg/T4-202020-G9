@@ -67,7 +67,7 @@ public class ArregloDinamico <T extends Comparable<T>> implements IArregloDinami
 
 	public T getElement(int i) {
 
-		return i < elementos.length && i >= 0? elementos[i]:null;
+		return i < tamanoAct && i >= 0? elementos[i]:null;
 	}
 
 	public T buscar(T dato) {
