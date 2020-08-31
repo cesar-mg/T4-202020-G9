@@ -105,7 +105,7 @@ public class Cinema {
 		BufferedReader bufferLectura = null;
 
 		try{
-			bufferLectura = new BufferedReader(new FileReader(".//data\\SmallMoviesDetailsCleaned.csv"));
+			bufferLectura = new BufferedReader(new FileReader("./data/SmallMoviesDetailsCleaned.csv"));
 
 			String linea = bufferLectura.readLine();
 			linea = bufferLectura.readLine();

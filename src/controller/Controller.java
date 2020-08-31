@@ -43,8 +43,8 @@ public class Controller {
 				case 1:
 				    
 					view.printMessage("Bienvenido, los datos iniciales son:");
-				    view.printMessage("Datos primera pelicula: " + modelo.darPeliculas().firstElement());
-				    view.printMessage("Datos ultima pelicula: " + modelo.darPeliculas().lastElement());
+				    view.printMessage("Datos primera pelicula: " + modelo.darPeliculas().firstElement().datosBasicos());
+				    view.printMessage("Datos ultima pelicula: " + modelo.darPeliculas().lastElement().datosBasicos());
 				    view.printMessage("La cantidad total de peliculas es: " + modelo.darTamano());
 					break;
 
