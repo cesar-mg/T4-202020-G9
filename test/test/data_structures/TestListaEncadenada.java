@@ -20,7 +20,7 @@ public class TestListaEncadenada {
 
 	public void setUp2() 
 	{
-		for(int i =0; i< 100; i++){
+		for(int i =0; i< 200; i++){
 			lista.addLast(""+i);
 		}
 	}
@@ -40,25 +40,8 @@ public class TestListaEncadenada {
 	public void testGetElement( ) 
 	{
 		setUp2();
-		assertEquals(lista.getElement(20),""+20);
+		assertEquals(""+20, lista.getElement(20));
 		assertNull(lista.getElement(300));
-	}
-	
-	@Test
-	public void testBuscar( ) 
-	{
-		assertNull(lista.isPresent("a"));
-		setUp2( );
-		assertEquals(lista.isPresent(""+68),(""+68));
-	}
-	
-	@Test
-	public void testEliminar( ) 
-	{
-		setUp2();
-		assertEquals(lista.deleteElement(68),(""+68));
-		
-		
 	}
 	
 	@Test
@@ -67,9 +50,9 @@ public class TestListaEncadenada {
 		lista.addLast(""+0);
 		assertTrue(lista.size()==1);
 		setUp2();
-		assertTrue(lista.size()==201);
-		lista.deleteElement(0);
-		assertEquals(lista.size(),200);
+		assertEquals(201, lista.size());
+		lista.removeFirst( );
+		assertEquals(200,lista.size());
 	}
 
 	@Test
