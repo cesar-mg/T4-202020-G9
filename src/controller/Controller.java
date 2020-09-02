@@ -7,6 +7,7 @@ import model.logic.Cinema;
 import model.logic.Pelicula;
 import sun.awt.RepaintArea;
 import view.View;
+import model.logic.ShellSort;
 
 public class Controller {
 
@@ -32,8 +33,10 @@ public class Controller {
 		boolean fin = false;
 		int dato = -1;
 		String respuesta = "";
-		modelo = new Cinema(4000); 
+		modelo = new Cinema(4000, 50); 
+		modelo.CargarArchivosLista();
 		modelo.CargarArchivosArreglo();
+	   
 
 		while( !fin ){
 			view.printMenu();
@@ -43,26 +46,52 @@ public class Controller {
 				case 1:
 				    
 					view.printMessage("Bienvenido, los datos iniciales son:");
+				    view.printMessage("Datos primera pelicula: " + modelo.darPeliculasLista().firstElement().datosBasicos());
+				    view.printMessage("Datos ultima pelicula: " + modelo.darPeliculasLista().lastElement().datosBasicos());
+				    view.printMessage("La cantidad total de peliculas es: " + modelo.darTamano());
+					break;
+					
+					
+					
+				case 2:
+					
+					view.printMessage("Bienvenido, los datos iniciales son:");
 				    view.printMessage("Datos primera pelicula: " + modelo.darPeliculas().firstElement().datosBasicos());
 				    view.printMessage("Datos ultima pelicula: " + modelo.darPeliculas().lastElement().datosBasicos());
 				    view.printMessage("La cantidad total de peliculas es: " + modelo.darTamano());
 					break;
-
-				case 2:
-					view.printMessage("Hola, ingrese el nombre del director a analizar.");
-					lector.nextLine();
-					respuesta = lector.nextLine();
-					ArregloDinamico<Pelicula> buenas = modelo.darBuenasPeliculas(respuesta);
-
-					System.out.println(buenas.size());
-					for(int i= 0; i< modelo.darBuenasPeliculas(respuesta).size();i++)
-					{
 					
-					Pelicula actual = modelo.darBuenasPeliculas(respuesta).darElemento(i);
-					String loBasico = "Los peliculas son: " + "   Id: " +actual.darId() + "   Titulo: " + actual.darTitle() + "   Generos: " + actual.darGeneros() + "    Fecha de salida: " + actual.darRelease_date() + actual.darCasting().castingNombres();
-					view.printMessage(loBasico);
+			
+				case 3:
+					
+					view.printMessage("Hola, el ranking de peliculas es : ");
+					ArregloDinamico<Pelicula> ranking = modelo.darRankingPeliculasVotos();
+					for(int i=0; i < ranking.size();i++)
+					{
+						Pelicula actual = ranking.darElemento(i);
+						String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+						view.printMessage(laInfo);
+ 						
 					}
-					break;
+					
+					
+					
+
+				//case 4:
+					//view.printMessage("Hola, ingrese el nombre del director a analizar.");
+					//lector.nextLine();
+					//respuesta = lector.nextLine();
+					//ArregloDinamico<Pelicula> buenas = modelo.darBuenasPeliculas(respuesta);
+
+					//System.out.println(buenas.size());
+					//for(int i= 0; i< modelo.darBuenasPeliculas(respuesta).size();i++)
+					//{
+					
+					//Pelicula actual = modelo.darBuenasPeliculas(respuesta).darElemento(i);
+					//String loBasico = "Los peliculas son: " + "   Id: " +actual.darId() + "   Titulo: " + actual.darTitle() + "   Generos: " + actual.darGeneros() + "    Fecha de salida: " + actual.darRelease_date() + actual.darCasting().castingNombres();
+					//view.printMessage(loBasico);
+					//}
+					//break;
 
 			
 

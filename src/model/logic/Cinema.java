@@ -53,6 +53,9 @@ public class Cinema {
 		return peliculas;
 	}
 
+	public ListaEncadenada<Pelicula>darPeliculasLista(){
+		return lasPeliculas;
+	}
 	
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
@@ -136,6 +139,8 @@ public class Cinema {
 		}
 		return top;
 	}
+	
+
 	
 	public ArregloDinamico<Pelicula> darRankingPeliculasPromedio()
 	{

@@ -17,8 +17,9 @@ public class View
 		public void printMenu()
 		{
 			System.out.println("Seleccione la opcion a su gusto.");
-			System.out.println("Opcion1. Ver información básica de la primer y última película de los archivos ademas de, el total de películas encontradas en las fuentes");
-			System.out.println("Opcion2. Encontrar buenas peliculas de un director");
+			System.out.println("Opcion1. Ver información básica de la primer y última película en una lista de los archivos ademas de, el total de películas encontradas en las fuentes");
+			System.out.println("Opcion2. Ver información básica de la primer y última película en un arreglo de los archivos ademas de, el total de películas encontradas en las fuentes");
+			System.out.println("Opcion3. Dar e ranking de peliculas segun su promedio de votacion");
 		}
 
 		public void printMessage(String mensaje) {

@@ -1,9 +1,13 @@
 package model.logic;
 
-public class ShellSort {
-	
-	
+import model.data_structures.Lista;
 
+public class ShellSort  <T extends Comparable<T>> {
+	
+	
+public ShellSort(){
+	
+}
 	
 	
 	
@@ -28,6 +32,9 @@ public class ShellSort {
 		  }
 		 
 		 }
-		 
+
+
+
+	
 
 }
