@@ -20,12 +20,12 @@ public class Pelicula implements Comparable<Pelicula>
 	private String tagline; 
 	private String title;
 	private double vote_average;
-	private String vote_count;
+	private double vote_count;
 	private String production_companies_number;
 	private String spoken_languages_number;
 	private Casting cast;
 
-	public Pelicula(int pId, String pPresupuesto, String pGeneros, String pImdb_id, String pLenguajeOriginal, String pTituloOriginal, String pDescripcion, String pPopularidad, String pCompaniasProductoras, String pProduction_countries, String pRelease_date, String pRevenue, String pRuntime, String pSpoken_languages, String pStatus, String pTagline, String pTitle, double pVoteAverage, String pVote_count, String pProduction_companies_number, String pSpoken_languages_number, Casting nCast)
+	public Pelicula(int pId, String pPresupuesto, String pGeneros, String pImdb_id, String pLenguajeOriginal, String pTituloOriginal, String pDescripcion, String pPopularidad, String pCompaniasProductoras, String pProduction_countries, String pRelease_date, String pRevenue, String pRuntime, String pSpoken_languages, String pStatus, String pTagline, String pTitle, double pVoteAverage, double pVote_count, String pProduction_companies_number, String pSpoken_languages_number, Casting nCast)
 	{
 		id = pId; 
 		presupuesto = pPresupuesto;
@@ -119,11 +119,11 @@ public class Pelicula implements Comparable<Pelicula>
 	{
 		return title;
 	}
-	public Double darVote_average()
+	public double darVote_average()
 	{
 		return vote_average;
 	}
-	public String darVote_count()
+	public double darVote_count()
 	{
 		return vote_count;
 	}
@@ -214,7 +214,7 @@ public class Pelicula implements Comparable<Pelicula>
 	{
 		vote_average = nVote_average;
 	}
-	public void cambiarVote_count(String nVote_count)
+	public void cambiarVote_count(Double nVote_count)
 	{
 		vote_count = nVote_count;
 	}

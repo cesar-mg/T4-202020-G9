@@ -34,16 +34,19 @@ public class Cinema {
 	
 	private ListaEncadenada<Director> losDirectores;
 	
+	private ArregloDinamico<Pelicula> ranking; 
+	
 
 	public Cinema()
 	{
 		
 	}
 
-	public Cinema(int tamano)
+	public Cinema(int tamano, int tamR)
 	{
 		peliculas = new ArregloDinamico<Pelicula>(tamano);
 		lasPeliculas = new ListaEncadenada<Pelicula>();
+		ranking = new ArregloDinamico<Pelicula>(tamR);
 	}
 	public ArregloDinamico<Pelicula> darPeliculas()
 	{
@@ -104,8 +107,64 @@ public class Cinema {
 			
 		}
 		return buenas;
-		
 	}
+	
+	public ArregloDinamico<Pelicula> darRankingPeliculasVotos()
+	{
+		ArregloDinamico<Pelicula> top = new ArregloDinamico<Pelicula>(20);
+		for(int i = 0; i < peliculas.size(); i++)
+		{
+			
+			Pelicula r = peliculas.getElement(i);
+			if(r.darVote_average() >= 8.0)
+			{
+				top.addLast(r);
+			}
+		}
+		for(int i = 0; i < top.size(); i++)
+		{
+			Pelicula primera = top.darElemento(i);
+			for(int j = i + 1; j < top.size() ; i++)
+			{
+				Pelicula comparar = top.darElemento(j);
+				if(comparar.darVote_average() >= primera.darVote_average())
+				{
+					top.changeInfo(i, top.darElemento(j)); 
+					top.changeInfo(j, primera);
+				}
+			}
+		}
+		return top;
+	}
+	
+	public ArregloDinamico<Pelicula> darRankingPeliculasPromedio()
+	{
+		ArregloDinamico<Pelicula> top = new ArregloDinamico<Pelicula>(20);
+		for(int i = 0; i < peliculas.size(); i++)
+		{
+			
+			Pelicula r = peliculas.getElement(i);
+			if(r.darVote_count() >= 2500)
+			{
+				top.addLast(r);
+			}
+		}
+		for(int i = 0; i < top.size(); i++)
+		{
+			Pelicula primera = top.darElemento(i);
+			for(int j = i + 1; j < top.size() ; i++)
+			{
+				Pelicula comparar = top.darElemento(j);
+				if(comparar.darVote_count() >= primera.darVote_count())
+				{
+					top.changeInfo(i, top.darElemento(j)); 
+					top.changeInfo(j, primera);
+				}
+			}
+		}	
+		return top;
+	}
+	
 	public void CargarArchivosArreglo()
 	{
 
@@ -119,7 +178,7 @@ public class Cinema {
 			while (linea!= null)
 			{
 				String[] campos = linea.split(SEPARATOR);
-				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), campos[18], campos[19], campos[20], null);
+				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), Double.parseDouble(campos[18].trim()), campos[19], campos[20], null);
 				peliculas.agregar(temp);
 				linea = bufferLectura.readLine();
 			}
@@ -182,7 +241,7 @@ public class Cinema {
 			while (linea!= null)
 			{
 				String[] campos = linea.split(SEPARATOR);
-				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), campos[18], campos[19], campos[20], null);
+				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), Double.parseDouble(campos[18].trim()), campos[19], campos[20], null);
 				lasPeliculas.addLast(temp);
 				linea = bufferLectura.readLine();
 			}
