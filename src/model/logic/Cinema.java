@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import controller.Controller;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Lista;
+import model.data_structures.ListaEncadenada;
 
 
 /**
@@ -28,6 +29,11 @@ public class Cinema {
 	private ArregloDinamico<Pelicula> peliculas; 
 	
 	private ArregloDinamico<Director> directores;
+	
+	private ListaEncadenada<Pelicula> lasPeliculas;
+	
+	private ListaEncadenada<Director> losDirectores;
+	
 
 	public Cinema()
 	{
@@ -37,6 +43,7 @@ public class Cinema {
 	public Cinema(int tamano)
 	{
 		peliculas = new ArregloDinamico<Pelicula>(tamano);
+		lasPeliculas = new ListaEncadenada<Pelicula>();
 	}
 	public ArregloDinamico<Pelicula> darPeliculas()
 	{
@@ -99,7 +106,7 @@ public class Cinema {
 		return buenas;
 		
 	}
-	public void CargarArchivos()
+	public void CargarArchivosArreglo()
 	{
 
 		BufferedReader bufferLectura = null;
@@ -162,6 +169,67 @@ public class Cinema {
 		}
 	}
 	
-	
+	public void CargarArchivosLista()
+	{
+
+		BufferedReader bufferLectura = null;
+
+		try{
+			bufferLectura = new BufferedReader(new FileReader("./data/SmallMoviesDetailsCleaned.csv"));
+
+			String linea = bufferLectura.readLine();
+			linea = bufferLectura.readLine();
+			while (linea!= null)
+			{
+				String[] campos = linea.split(SEPARATOR);
+				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), campos[18], campos[19], campos[20], null);
+				lasPeliculas.addLast(temp);
+				linea = bufferLectura.readLine();
+			}
+			bufferLectura.close();
+
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+
+		try{
+			bufferLectura = new BufferedReader(new FileReader("./data\\MoviesCastingRaw-small.csv"));
+
+			String linea = bufferLectura.readLine();
+			linea = bufferLectura.readLine();
+			int i = 0;
+			while (linea!= null)
+			{
+				String[] campos = linea.split(SEPARATOR);
+				
+				Casting temp = new Casting (Integer.parseInt(campos[0]), campos[1],Integer.parseInt(campos[2]), campos[3], Integer.parseInt(campos[4]), campos[5], Integer.parseInt(campos[6]), campos[7], Integer.parseInt(campos[8]), campos[9], Integer.parseInt(campos[10]), Integer.parseInt(campos[11]), campos[12].trim(), Integer.parseInt(campos[13]), Integer.parseInt(campos[14]), campos[15], Integer.parseInt(campos[16]), campos[17], campos[18]);
+				lasPeliculas.getElement(i).cambiarCast(temp);
+				i++;
+				linea = bufferLectura.readLine();
+			}
+		}
+		
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if( bufferLectura != null)
+			{
+				try
+				{
+					bufferLectura.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 }
