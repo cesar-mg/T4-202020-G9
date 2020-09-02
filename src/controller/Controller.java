@@ -33,7 +33,7 @@ public class Controller {
 		int dato = -1;
 		String respuesta = "";
 		modelo = new Cinema(4000); 
-		modelo.CargarArchivos();
+		modelo.CargarArchivosArreglo();
 
 		while( !fin ){
 			view.printMenu();
