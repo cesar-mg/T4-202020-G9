@@ -35,6 +35,8 @@ public class Cinema {
 	private ListaEncadenada<Pelicula> lasPeliculas;
 
 	private ListaEncadenada<Director> losDirectores;
+	
+	private ArregloDinamico<Actor> actor;
 
 	public Cinema(int tamano )
 	{
@@ -42,6 +44,7 @@ public class Cinema {
 		directores = new  ArregloDinamico<Director> (100);
 		generos = new ArregloDinamico<Genero>(176);
 		lasPeliculas = new ListaEncadenada<Pelicula>();
+		actor = new ArregloDinamico<>(50);
 	}
 	public ArregloDinamico<Pelicula> darPeliculas()
 	{
@@ -378,7 +381,38 @@ public class Cinema {
 		}	
 		return top;
 	}
-
+	
+	public ArregloDinamico<Actor> darActor (String nNombre)
+	{
+		ArregloDinamico<Actor> r = new ArregloDinamico<Actor>(1000);
+		for(int i=0; i < actor.size(); i++)
+		{
+			Actor pos = actor.darElemento(i);
+			if(pos.darActor().equals(nNombre))
+			{
+				r.addFirst(pos);
+			}
+		}
+		return r;
+	}
+	
+	public void agregarAlActor(String nActor, Pelicula nPel)
+	{
+		int a = -1;
+		for(int i = 0; i < actor.size(); i++)
+		{
+			if(actor.getElement(i).darActor().equals(nActor))
+				a = i;
+		}
+		if(a == -1)
+		{
+			Actor n = new Actor(nActor);
+			actor.addLast(n);
+			n.agregarPelicula(nPel);
+		}
+		else
+			actor.getElement(a).agregarPelicula(nPel);
+	}
 	public void CargarArchivosArreglo()
 	{
 
