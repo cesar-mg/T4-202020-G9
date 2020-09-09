@@ -83,7 +83,7 @@ public class ArregloDinamico <T extends Comparable<T>> implements Lista<T> {
 			a = elementos[i];
 		}
 
-		return null;
+		return a;
 	}
 
 	public T eliminar(T dato) {
@@ -265,6 +265,11 @@ public class ArregloDinamico <T extends Comparable<T>> implements Lista<T> {
 	public T darElemento(int i) 
 	{
 		return getElement(i);
+	}
+	
+	public T[] darElementos()
+	{
+		return elementos;
 	}
 	 
 }

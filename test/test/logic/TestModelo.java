@@ -14,7 +14,7 @@ public class TestModelo {
 
 	@Before
 	public void setUp1() {
-		modelo= new Cinema(CAPACIDAD);
+		
 	}
 
 	public void setUp2() {
