@@ -38,7 +38,7 @@ public interface TablaSimbolos <K extends Comparable<K>, V extends Comparable<V>
 	boolean isEmpty( );
 	
 	/**
-	 * Retornar el numero de tuplas presentes en la tabla de simobolos.
+	 * Retorna el numero de tuplas presentes en la tabla de simobolos.
 	 * @return numero de tuplas presentes en la tabla de simobolos.
 	 */
 	int size( );
@@ -54,5 +54,5 @@ public interface TablaSimbolos <K extends Comparable<K>, V extends Comparable<V>
 	 * @return Todas los valores almacenados en la Tabla.
 	 */
 	Lista<V> valueSet( );
-	
+
 }

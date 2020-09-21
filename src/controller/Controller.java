@@ -10,7 +10,7 @@ import model.logic.Director;
 import model.logic.Pelicula;
 import sun.awt.RepaintArea;
 import view.View;
-import model.logic.Sorts;
+import model.logic.Extras;
 
 public class Controller {
 
