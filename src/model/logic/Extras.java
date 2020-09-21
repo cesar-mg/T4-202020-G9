@@ -1,12 +1,12 @@
 package model.logic;
 import model.data_structures.Lista;
 
-public class Sorts  <T extends Comparable<T>> {
+public class Extras  <T extends Comparable<T>> {
 
 
-	public Sorts()
+	public Extras()
 	{
-		
+
 	}
 
 	public static void Shellsort(Comparable[] array) 
@@ -32,7 +32,7 @@ public class Sorts  <T extends Comparable<T>> {
 		}
 
 	}
-	
+
 	public static void quicksort(Comparable[] arreglo, int izq, int der) 
 	{
 
@@ -64,7 +64,7 @@ public class Sorts  <T extends Comparable<T>> {
 			quicksort(arreglo,j+1,der);     
 
 	}
-	
+
 	public static Comparable[] miniSort(Comparable[] arreglo, int tam)
 	{
 		Comparable[] resp = new Comparable[tam];
@@ -72,6 +72,37 @@ public class Sorts  <T extends Comparable<T>> {
 			resp[i] = arreglo[i];
 		quicksort(resp, 0, tam-1);
 		return resp;
+	}
+
+	public static boolean isPrime( int n )
+	{
+		if(n <= 1)
+			return false;
+		if(n <= 3)
+			return true;
+		if(n % 2 ==0 || n % 3 == 0)
+			return false;
+		for(int i = 5; i < ((int) Math.sqrt(n) + 1); i+= 6)
+		{
+			if(n % i == 0 || n % (i + 2) == 0)
+				return false;
+		}
+		return true;
+	}
+
+	public static int getNextPrime(int n)
+	{
+		if (n <= 1)
+			return 2;
+		int prime = (int) n;
+		boolean found = false;
+		while(!found)
+		{
+			prime += 1;
+			if(isPrime(prime))
+				found = true;
+		}
+		return prime; 
 	}
 	
 }

@@ -240,7 +240,7 @@ public class Cinema {
 	
 	public ListaEncadenada<Pelicula> ordenarPeoresVA(ArregloDinamico<Pelicula> pels, int tot)
 	{
-		ListaEncadenada<Pelicula> resp = toListaEncadenda(Sorts.miniSort((Comparable[]) pels.darElementos(), tot));
+		ListaEncadenada<Pelicula> resp = toListaEncadenda(Extras.miniSort((Comparable[]) pels.darElementos(), tot));
 		double margen = resp.lastElement().darVote_average();
 		int tam = resp.size();
 		for(int i = tot; i < pels.size(); i ++)
@@ -259,7 +259,7 @@ public class Cinema {
 	}
 	public ListaEncadenada<Pelicula> ordenarMejoresVA(ArregloDinamico<Pelicula> pels, int tot)
 	{
-		ListaEncadenada<Pelicula> resp = toListaEncadenda(Sorts.miniSort((Comparable[]) pels.darElementos(), tot));
+		ListaEncadenada<Pelicula> resp = toListaEncadenda(Extras.miniSort((Comparable[]) pels.darElementos(), tot));
 		double margen = resp.firstElement().darVote_average();
 		int tam = resp.size();
 		for(int i = tot; i < pels.size(); i ++)
@@ -279,7 +279,7 @@ public class Cinema {
 	
 	public ListaEncadenada<Pelicula> ordenarPeoresVC(ArregloDinamico<Pelicula> pels, int tot)
 	{
-		ListaEncadenada<Pelicula> resp = toListaEncadenda(Sorts.miniSort((Comparable[]) pels.darElementos(), tot));
+		ListaEncadenada<Pelicula> resp = toListaEncadenda(Extras.miniSort((Comparable[]) pels.darElementos(), tot));
 		double margen = resp.lastElement().darVote_count();
 		int tam = resp.size();
 		for(int i = tot; i < pels.size(); i++)
@@ -298,7 +298,7 @@ public class Cinema {
 	}
 	public ArregloDinamico<Pelicula> ordenarMejoresVC(ArregloDinamico<Pelicula> pels, int tot)
 	{
-		ArregloDinamico<Pelicula> resp = toArregloDinamico(Sorts.miniSort((Comparable[]) pels.darElementos(), tot));
+		ArregloDinamico<Pelicula> resp = toArregloDinamico(Extras.miniSort((Comparable[]) pels.darElementos(), tot));
 		double margen = resp.firstElement().darVote_count();
 		for(int i = tot; i < pels.size(); i ++)
 		{
