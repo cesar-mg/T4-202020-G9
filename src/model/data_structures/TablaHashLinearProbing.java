@@ -55,7 +55,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 	{
 		int pos = getPos(key);
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(act == null)
+		if(act == null || act.getKey().equals("EMPTY"))
 		{
 			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
 			mapa.changeInfo(pos, nuevo);
@@ -75,7 +75,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		if(pos >= (m - 1))
 			pos = 0;
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(act == null)
+		if(act == null || act.getKey().equals("EMPTY"))
 		{
 			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
 			mapa.changeInfo(pos, nuevo);
@@ -94,7 +94,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 	{
 		int pos = getPos(key);
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(key.equals(act.getKey()))
+		if(act != null && key.equals(act.getKey()))
 			return act.getValue();
 		else 
 			return getRecursiveVersion(pos + 1, key);
@@ -105,9 +105,9 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		if(pos >= (m-1))
 			pos = 0;
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(key.equals(act.getKey()))
+		if(act != null && key.equals(act.getKey()))
 			return act.getValue();
-		else if(key.equals("EMPTY") || act.getKey() != null)
+		else if(key.equals("EMPTY") || (act != null && act.getKey() != null))
 			return getRecursiveVersion(pos + 1, key);
 		else
 			return null; 
@@ -120,7 +120,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		int pos = getPos(key);
 		V retorno = null;
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(key.equals(act.getKey()))
+		if(act != null && key.equals(act.getKey()))
 		{
 			retorno = act.getValue();
 			act.deleteLP();
@@ -138,14 +138,14 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		if(pos >= (m-1))
 			pos = 0;
 		NodoHash<K,V> act = mapa.getElement(pos);
-		if(key.equals(act.getKey()))
+		if(act != null && key.equals(act.getKey()))
 		{
 			V retorno = act.getValue();
 			act.deleteLP();
 			totalElementos--;
 			return retorno;
 		}
-		else if(key.equals("EMPTY") || act.getKey() != null)
+		else if(key.equals("EMPTY") || (act != null && act.getKey() != null))
 			return getRecursiveVersion(pos + 1, key);
 		else
 			return null; 
@@ -183,8 +183,8 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		while(i < m)
 		{
 			NodoHash<K,V> temp = mapa.getElement(i);
-			if(temp != null)
-				result.addLast(temp.getKey());
+			if(temp != null && temp.getKey() != null && temp.getKey() != "EMPTY")
+				result.addLast(temp.getKey());	
 			i++;
 		}
 		return result;
@@ -201,8 +201,8 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		while(i < m)
 		{
 			NodoHash<K,V> temp = mapa.getElement(i);
-			if(temp != null)
-				result.addLast(temp.getValue());
+			if(temp != null && temp.getValue() != null )
+				result.addLast(temp.getValue());	
 			
 			i++;
 		}

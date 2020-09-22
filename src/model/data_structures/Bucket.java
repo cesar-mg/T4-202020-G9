@@ -26,37 +26,6 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 		
 	}
 	
-	public void addToKey(NodoHash<K,V> nodo)
-	{
-		int i = 0;
-		boolean done = false;
-		while(i < nodos.size( ) && !done)
-		{
-			NodoHash<K,V> temp = nodos.getElement(i);
-			if(nodo.getKey( ).equals(temp.getKey()))
-			{
-				V valor = temp.getValue();
-				if(valor instanceof ArregloDinamico)
-				{
-					ArregloDinamico t = (ArregloDinamico) valor;
-					t.addLast(nodo.getValue());
-				}
-				else
-				{
-					ArregloDinamico t = new ArregloDinamico(2);
-					t.addLast(temp);
-					t.addLast(nodo.getValue());
-					temp.changeValue((V) t);
-				}
-				done = true;
-			}
-			i++;
-		}
-		if(i < nodos.size())
-			nodos.addLast(nodo);
-		
-	}
-	
 	public NodoHash<K, V> get(K key) 
 	{
 		int i = 0;
@@ -64,7 +33,7 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 		while(i < nodos.size() && buscado == null)
 		{
 			NodoHash<K,V> act = nodos.getElement(i);
-			if(act.getKey().equals(key))
+			if(act != null && act.getKey().equals(key))
 				buscado = act;
 		}
 		return buscado;
@@ -77,7 +46,7 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 		while(i < nodos.size() && buscado == null)
 		{
 			NodoHash<K,V> act = nodos.getElement(i);
-			if(act.getKey().equals(key))
+			if(act != null && act.getKey().equals(key))
 			{
 				buscado = act;
 				nodos.deleteElement(i);
