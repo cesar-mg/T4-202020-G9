@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implements Comparable<Bucket>
+public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implements Comparable<Bucket<K,V>>
 {
 	private ArregloDinamico<NodoHash<K,V>> nodos;
 	

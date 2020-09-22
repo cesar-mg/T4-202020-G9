@@ -35,7 +35,7 @@ public class Cinema {
 
 	private ListaEncadenada<Pelicula> lasPeliculas;
 
-	private ListaEncadenada<Director> losDirectores;
+	private TablaHashLinearProbing<String, ArregloDinamico<Pelicula>> losDirectores;
 	
 
 	
