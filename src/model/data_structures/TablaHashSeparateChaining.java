@@ -8,39 +8,39 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	 * Representa el factor de carga actual.
 	 */
 	private double factorDeCarga;
-	
+
 	/**
 	 * Representa el total de elementos del mapa.
 	 */
 	private int totalElementos;
-	
+
 	/**
 	 * Representa el arreglo utilizado en el mapa;
 	 */
-	
+
 	private ArregloDinamico<Bucket<K,V>> mapa;
-	
+
 	/**
 	 * Representa la constante a utilizada en el MAD.
 	 */
 	private int a;
-	
+
 	/**
 	 * Representa la constante b utilizada en el MAD.
 	 */
 	private int b;
-	
+
 	/**
 	 * Representa la constante p utilizada en el MAD.
 	 */
 	private int p;
-	
+
 	/**
 	 * Representa la constante m utilizada en el MAD.
 	 */
 	private int m; 
-	
-	
+
+
 	public TablaHashSeparateChaining( int size ) 
 	{
 		m = Extras.getNextPrime((int) size/5);
@@ -53,11 +53,10 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 			mapa.changeInfo(i, new Bucket<K,V>(5));
 		}
 	}
-	
+
 	public void put(K key, V value) 
 	{
 		int pos = getPos(key);
-		
 		Bucket<K,V> act = mapa.getElement(pos);
 		NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
 		act.addToBucket(nuevo);
@@ -65,8 +64,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	}
 
 
-
-
+	@Override
 	public V get( K key ) 
 	{
 		int pos = getPos(key);
@@ -74,6 +72,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		NodoHash<K,V> buscado = bucket.get(key);
 		return buscado == null? null: buscado.getValue();
 	}
+
 	@Override
 	public V remove( K key) 
 	{
@@ -127,11 +126,30 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		}
 		return result;
 	}
+
 	
 	/**
 	 * Retorna una lista con todas los valores almacenados en la Tabla.
 	 * @return Todas los valores almacenados en la Tabla.
 	 */
+	public Lista<V> valueSet() 
+	{
+		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
+			int j = 0;
+			while(j < temp.size())
+			{
+				NodoHash<K,V> tElem = temp.getElement(j);
+				if(tElem != null && tElem.getValue() != null)
+					result.addLast(temp.getElement(j).getValue());	
+			}
+			i++;
+		}
+		return result;
+	}
 
 	public Lista<V> valueSet() 
 	{
@@ -159,7 +177,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		int hashFinal = Math.abs(hashInicial) % m;
 		return hashFinal;
 	}
-	
+
 	private void verificarInvariante( )
 	{
 		assert factorDeCarga < 5.0;
