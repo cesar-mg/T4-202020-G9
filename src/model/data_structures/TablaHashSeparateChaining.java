@@ -48,118 +48,41 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		a  = (int) (Math.random() * (p-1)+1);
 		b  = (int) (Math.random() * (p-1)+1);
 		mapa = new ArregloDinamico<Bucket<K,V>> (m);
-		for(int i = 0; i < m;i++)
+		for(int i = 0; i < mapa.size();i++)
 		{
-			mapa.changeInfo(i, new Bucket(5));
+			mapa.changeInfo(i, new Bucket<K,V>(5));
 		}
 	}
 	
 	public void put(K key, V value) 
 	{
 		int pos = getPos(key);
-		Bucket act = mapa.getElement(pos);
-		if(act == null)
-		{
-			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
-			arr.addLast(value);
-			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
-			mapa.changeInfo(pos, nuevo);
-		}
-		else
-		{
-			if(act.getKey().equals(key))
-			{
-				ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
-				datos.addLast(value);
-			}
-			else
-				putRecursiveVersion(pos + 1, key, value);
-
-		}
+		
+		Bucket<K,V> act = mapa.getElement(pos);
+		NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
+		act.addToBucket(nuevo);
 		verificarInvariante();
 	}
 
-//	private void putRecursiveVersion(int pos, K key, V value)
-//	{
-//		if(pos >= (m - 1))
-//			pos = 0;
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(act == null)
-//		{
-//			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
-//			arr.addLast(value);
-//			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
-//			mapa.changeInfo(pos, nuevo);
-//		}
-//		else if(act.getKey().equals(key))
-//		{
-//			ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
-//			datos.addLast(value);
-//		}
-//		else
-//			putRecursiveVersion(pos + 1, key, value);
-//	}
 
 
-//	@Override
-//	public V get( K key ) 
-//	{
-//		int pos = getPos(key);
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(key.equals(act.getKey()))
-//			return act.getValue();
-//		else 
-//			return getRecursiveVersion(pos + 1, key);
-//	}
-//
-//	private V getRecursiveVersion(int pos, K key) 
-//	{
-//		if(pos >= (m-1))
-//			pos = 0;
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(key.equals(act.getKey()))
-//			return act.getValue();
-//		else if(key.equals("EMPTY") || act.getKey() != null)
-//			return getRecursiveVersion(pos + 1, key);
-//		else
-//			return null; 
-//	}
 
-
-//	@Override
-//	public V remove( K key) 
-//	{
-//		int pos = getPos(key);
-//		V retorno = null;
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(key.equals(act.getKey()))
-//		{
-//			retorno = act.getValue();
-//			act.deleteLP();
-//		}
-//		else 
-//			return deleteRecursiveVersion(pos + 1, key);
-//		
-//		verificarInvariante();
-//		return retorno;
-//	}
-//
-//	private V deleteRecursiveVersion(int pos, K key) 
-//	{
-//		if(pos >= (m-1))
-//			pos = 0;
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(key.equals(act.getKey()))
-//		{
-//			V retorno = act.getValue();
-//			act.deleteLP();
-//			return retorno;
-//		}
-//		else if(key.equals("EMPTY") || act.getKey() != null)
-//			return getRecursiveVersion(pos + 1, key);
-//		else
-//			return null; 
-//	}
+	public V get( K key ) 
+	{
+		int pos = getPos(key);
+		Bucket<K,V> bucket = mapa.getElement(pos);
+		NodoHash<K,V> buscado = bucket.get(key);
+		return buscado == null? null: buscado.getValue();
+	}
+	@Override
+	public V remove( K key) 
+	{
+		int pos = getPos(key);
+		Bucket<K,V> bucket = mapa.getElement(pos);
+		NodoHash<K,V> buscado = bucket.remove(key);
+		verificarInvariante();
+		return buscado == null? null: buscado.getValue();
+	}
 
 
 	@Override
@@ -186,48 +109,50 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		return totalElementos;
 	}
 
-//	public Lista<K> keySet() 
-//	{
-//		ArregloDinamico<K> result = new ArregloDinamico<K>(totalElementos);
-//		int i = 0;
-//		while(i < m)
-//		{
-//			NodoHash<K,V> temp = mapa.getElement(i);
-//			if(temp != null)
-//				result.addLast(temp.getKey());
-//			i++;
-//		}
-//		return result;
-//	}
-
+	public Lista<K> keySet() 
+	{
+		ArregloDinamico<K> result = new ArregloDinamico<K>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
+			int j = 0;
+			while(j < temp.size())
+			{
+				NodoHash<K,V> tElem = temp.getElement(j);
+				if(tElem != null && tElem.getKey() != null)
+					result.addLast(temp.getElement(j).getKey());	
+			}
+			i++;
+		}
+		return result;
+	}
+	
 	/**
 	 * Retorna una lista con todas los valores almacenados en la Tabla.
 	 * @return Todas los valores almacenados en la Tabla.
 	 */
-//	public Lista<V> valueSet( )
-//	{
-//		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
-//		int i = 0;
-//		while(i < m)
-//		{
-//			NodoHash<K,V> temp = mapa.getElement(i);
-//			if(temp != null)
-//			{
-//				int j = 0;
-//				while(j < m)
-//				{
-//					ArregloDinamico<V> arr = (ArregloDinamico<V>) temp.getValue();
-//					V act = arr.getElement(j);
-//					if(act != null)
-//						result.addLast(arr.getElement(j));
-//				}
-//				j++;
-//			}
-//			i++;
-//		}
-//		return result;
-//	}
 
+	public Lista<V> valueSet() 
+	{
+		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
+			int j = 0;
+			while(j < temp.size())
+			{
+			result.addLast(temp.getElement(j).getValue());	
+				NodoHash<K,V> tElem = temp.getElement(j);
+				if(tElem != null && tElem.getValue() != null)
+					result.addLast(temp.getElement(j).getValue());	
+			}
+			i++;
+		}
+		return result;
+	}
+	
 	public int getPos(K key)
 	{
 		int hashInicial =  (a * key.hashCode( ) + b) % p ;
@@ -241,27 +166,4 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		assert factorDeCarga >= 0;
 	}
 
-	@Override
-	public V get(K key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public V remove(K key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Lista<K> keySet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Lista<V> valueSet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

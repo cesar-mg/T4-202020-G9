@@ -10,6 +10,7 @@ import model.data_structures.ArregloDinamico;
 import model.data_structures.Lista;
 import model.data_structures.ListaEncadenada;
 import model.data_structures.TablaHashLinearProbing;
+import model.data_structures.TablaHashSeparateChaining;
 
 
 /**
@@ -26,6 +27,8 @@ public class Cinema {
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public static final String SEPARATOR=";";
+	
+	public static final String CAMPOS="/";
 
 	private ArregloDinamico<Pelicula> peliculas; 
 
@@ -35,7 +38,9 @@ public class Cinema {
 
 	private ListaEncadenada<Pelicula> lasPeliculas;
 
-	private TablaHashLinearProbing<String, ArregloDinamico<Pelicula>> losDirectores;
+	private TablaHashLinearProbing<String, ArregloDinamico<Pelicula>> tablaLinear;
+	
+	private TablaHashSeparateChaining<String, ArregloDinamico<Pelicula>> tablaSeparate;
 	
 
 	
@@ -48,6 +53,8 @@ public class Cinema {
 		generos = new ArregloDinamico<Genero>(176);
 		lasPeliculas = new ListaEncadenada<Pelicula>();
 		actor = new ArregloDinamico<>(50);
+		tablaLinear = new TablaHashLinearProbing<>(tamano);
+		tablaSeparate = new TablaHashSeparateChaining<>(tamano);
 	}
 	public ArregloDinamico<Pelicula> darPeliculas()
 	{
@@ -97,6 +104,86 @@ public class Cinema {
 	}
 
 
+	
+	public TablaHashLinearProbing<String,ArregloDinamico<Pelicula>> darTablaLinear(){
+		return tablaLinear;
+	}
+	
+	public int tamañoTablaLinear (){
+		return tablaLinear.size();
+	}
+	
+	public String datosBasicosPrimeraPeliculatablaLinear ()
+	{
+	String llave =	tablaLinear.keySet().firstElement();
+	ArregloDinamico<Pelicula> actual  = tablaLinear.get(llave);
+		return actual.darElemento(0).datosBasicos();
+				
+	}
+	
+	public String datosBasicosUltimaPeliculatablaLinear ()
+	{
+		
+		String llave =	tablaLinear.keySet().lastElement();
+		ArregloDinamico<Pelicula> actual  = tablaLinear.get(llave);
+			return actual.darElemento(0).datosBasicos();
+					
+		}
+	
+	public String datosTablaLinear (){
+		String respuesta = "";
+		respuesta = "numero duplas: " + tablaLinear.size() + ", Tamaño final: " + tablaLinear.keySet().size()  + ", Factor carga:  " + tablaLinear.size()/tablaLinear.keySet().size() + "numero rehases: ";
+				
+		return respuesta;
+	}
+	
+	public TablaHashSeparateChaining<String,ArregloDinamico <Pelicula>> darTablaSeparate(){
+	return tablaSeparate;
+	}
+	public int tamañoTablaSeparate (){
+		return tablaSeparate.size();
+	}
+	public String datosBasicosPrimeraPeliculatablaSeparate ()
+	{
+	String llave =	tablaSeparate.keySet().firstElement();
+	ArregloDinamico<Pelicula> actual  = tablaSeparate.get(llave);
+		return actual.darElemento(0).datosBasicos();
+				
+	}
+	
+	public String datosBasicosUltimaPeliculatablaSeparate ()
+	{
+		
+		String llave =	tablaSeparate.keySet().lastElement();
+		ArregloDinamico<Pelicula> actual  = tablaSeparate.get(llave);
+			return actual.darElemento(0).datosBasicos();
+					
+		}
+	
+	public String datosTablaSeparate (){
+		String respuesta = "";
+		respuesta = "numero duplas: " + tablaSeparate.size() + ", Tamaño final: " + tablaSeparate.keySet().size()  + ", Factor carga:  " + tablaSeparate.size()/tablaSeparate.keySet().size() + "numero rehases: ";
+				
+		return respuesta;
+	}
+	
+	
+	
+	public ArregloDinamico<Pelicula> peliculasPorCompañiaAñoLinear (String llave){
+		ArregloDinamico<Pelicula> peliculasCo = new ArregloDinamico<>(500);
+		if(tablaLinear.contains(llave)){
+			ArregloDinamico<Pelicula> valor = tablaLinear.get(llave); 
+			for(int i = 0; i< valor.size();i++){
+				Pelicula actual = valor.getElement(i);
+				peliculasCo.addLast(actual);
+			}
+		}
+		else if(tablaLinear.contains(llave)==false){
+			 return peliculasCo;
+		}
+		return peliculasCo;
+		
+	}
 
 
 	public Director buscarDirector (String p)
@@ -233,10 +320,11 @@ public class Cinema {
 		return nueva;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArregloDinamico<Pelicula> toArregloDinamico(Comparable[] arreglo)
 	{
 		ArregloDinamico<Pelicula> nueva = new ArregloDinamico<Pelicula>(500);
-		for(Comparable act:arreglo)
+		for(Comparable<Pelicula> act:arreglo)
 			nueva.addLast((Pelicula) act);
 		return nueva;
 	}
@@ -549,5 +637,61 @@ public class Cinema {
 			}
 		}
 	}
+	
+	public void CargarArchivosTablas()
+	{
+
+		BufferedReader bufferLectura = null;
+
+		try{
+			bufferLectura = new BufferedReader(new FileReader("./data/SmallMoviesDetailsCleaned.csv"));
+
+			String linea = bufferLectura.readLine();
+			linea = bufferLectura.readLine();
+			int inicial = tablaLinear.keySet().size();
+			while (linea!= null)
+			{
+				
+				
+				String[] campos = linea.split(SEPARATOR);
+				Pelicula temp = new Pelicula(Integer.parseInt(campos[0].trim()), campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7], campos[8], campos[9], campos[10], campos[11], campos[12], campos[13], campos[14], campos[15], campos[16], Double.parseDouble(campos[17].trim()), Double.parseDouble(campos[18].trim()), campos[19], campos[20], null);
+				//String[] llaves = campos[10].split(CAMPOS);
+					//System.out.println("llave: "+ campos[8] + ", " +  llaves[2]);
+					String llave = campos[8];
+					ArregloDinamico<Pelicula> valor = new ArregloDinamico<>(2);
+					valor.addLast(temp);
+					tablaLinear.put(llave, valor);
+					//tablaSeparate.put(llave, valor);
+		
+				linea = bufferLectura.readLine();
+			}
+			bufferLectura.close();
+			System.out.println("numero duplas: " + tablaLinear.size() +", Tamaño inicial: "+ inicial + ", Tamaño final: " + tablaLinear.keySet().size()  + ", Factor carga:  "  + "numero rehases: ");
+			//System.out.println(tablaSeparate.keySet().firstElement());
+
+
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+
+		finally 
+		{
+			if( bufferLectura != null)
+			{
+				try
+				{
+					bufferLectura.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 
 }

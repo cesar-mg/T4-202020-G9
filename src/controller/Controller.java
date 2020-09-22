@@ -36,7 +36,7 @@ public class Controller {
 		int dato = -1;
 		String respuesta = "";
 		modelo = new Cinema(4000); 
-		modelo.CargarArchivosArreglo();
+		modelo.CargarArchivosTablas();
 
 		while( !fin ){
 			view.printMenu();
@@ -45,102 +45,142 @@ public class Controller {
 			switch(option){
 			case 1:
 
-				view.printMessage("Bienvenido, los datos iniciales son:");
-				view.printMessage("Datos primera pelicula: " + modelo.darPeliculasLista().firstElement().datosBasicos());
-				view.printMessage("Datos ultima pelicula: " + modelo.darPeliculasLista().lastElement().datosBasicos());
-				view.printMessage("La cantidad total de peliculas es: " + modelo.darTamano());
+				view.printMessage("Bienvenido,de que tabla quiere los datos iniciales:");
+				view.printMessage("Opcion 1: TablaHash Linear Probbing.");
+				view.printMessage("Opcion 2: TablaHash Separate Chaining.");
+				int opc = lector.nextInt();
+				if(opc<2){
+					view.printMessage("Los datos de la primera pelicula en la tabla Linear son: " + modelo.datosBasicosPrimeraPeliculatablaLinear());
+					view.printMessage("Los datos de la ultima pelicula en la tabla Linear son: " + modelo.datosBasicosUltimaPeliculatablaLinear());
+				}
+				else {
+					
+				}
+				
 				break;
 
 
 
 			case 2:
 
-				view.printMessage("Bienvenido, los datos iniciales son:");
-				view.printMessage("Datos primera pelicula: " + modelo.darPeliculas().firstElement().datosBasicos());
-				view.printMessage("Datos ultima pelicula: " + modelo.darPeliculas().lastElement().datosBasicos());
-				view.printMessage("La cantidad total de peliculas es: " + modelo.darTamano());
+				
+				view.printMessage("Bienvenido, por favor ingrese el nombre y año de la compañia a buscar: ");
+				lector.nextLine();
+				respuesta = lector.nextLine();
+				Lista<Pelicula> pelis = modelo.peliculasPorCompañiaAñoLinear(respuesta);
+				for(int i=0; i<pelis.size();i++){
+					Pelicula actual = pelis.getElement(i);
+					String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+					view.printMessage(laInfo);
+					view.printMessage("El numero total de peliculas es : " + pelis.size());
+				}
+				
 				break;
 
 
 			case 3:
+				
+				
+				view.printMessage("Bienvenido, por favor ingrese el nombre y año de la compañia a buscar: ");
+				lector.nextLine();
+				respuesta = lector.nextLine();
+				Lista<Pelicula> pelisSeparate = modelo.peliculasPorCompañiaAñoLinear(respuesta);
+				for(int i=0; i<pelisSeparate.size();i++){
+					Pelicula actual = pelisSeparate.getElement(i);
+					String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+					view.printMessage(laInfo);
+					view.printMessage("El numero total de peliculas es : " + pelisSeparate.size());
+				}
+				
+				break;
 
-				view.printMessage("Hola, seleccione el numero de peliculas a rankear");
-				int num = lector.nextInt();
-				view.printMessage("Hola, seleccione la opcion para rankear");
-				view.printMessage("Opcion 1: Peores, por promedio de votos.");
-				view.printMessage("Opcion 2: Mejores, por promedio de votos.");
-				view.printMessage("Opcion 3: Peores, por total de votos.");
-				view.printMessage("Opcion 4: Mejores, por total de votos.");
-				int forma = lector.nextInt() -1;
-				Lista<Pelicula> ranking = modelo.darRankPeliculas(num, forma );
-				if(num < 3)
-				{
-					for(int i=0; i < ranking.size();i++)
-					{
-						Pelicula actual = ranking.getElement(i);
-						String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
-						view.printMessage(laInfo);
-					}
-				}
-				else
-				{
-					for(int i=0; i < ranking.size();i++)
-					{
-						Pelicula actual = ranking.getElement(i);
-						String laInfo = "Id: " + actual.darId() + "     Total Votos:    " + actual.darVote_count() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
-						view.printMessage(laInfo);
-					}
-				}
+				//view.printMessage("Hola, seleccione el numero de peliculas a rankear");
+				//int num2 = lector.nextInt();
+				//view.printMessage("Hola, seleccione la opcion para rankear");
+				//view.printMessage("Opcion 1: Peores, por promedio de votos.");
+				//view.printMessage("Opcion 2: Mejores, por promedio de votos.");
+				//view.printMessage("Opcion 3: Peores, por total de votos.");
+				//view.printMessage("Opcion 4: Mejores, por total de votos.");
+				//int forma = lector.nextInt() -1;
+				//Lista<Pelicula> ranking = modelo.darRankPeliculas(num2, forma );
+				//if(num2 < 3)
+				//{
+				//for(int i=0; i < ranking.size();i++)
+				//{
+				//	Pelicula actual = ranking.getElement(i);
+						
+				//String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+				//view.printMessage(laInfo);
+			
+				//	}
+				//}
+				//else
+				//{
+				//for(int i=0; i < ranking.size();i++)
+				//{
+				//	Pelicula actual = ranking.getElement(i);
+				//	String laInfo = "Id: " + actual.darId() + "     Total Votos:    " + actual.darVote_count() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+						//	view.printMessage(laInfo);
+				//}
+				//}
 	
 				
 			case 4:
-				view.printMessage("Bienvenido, por favor ingrese el nombre del director a buscar: ");
-				lector.nextLine();
-				respuesta = lector.nextLine();
-				ArregloDinamico<Pelicula> a = modelo.conocerUnDirector(respuesta);
-				for(int i=0; i < a.size();i++)
-				view.printMessage("Lista de peliculas de el director: " + a.getElement(i).datosBasicos());
-				view.printMessage("El numero de peliculas del director es: " + a.size());
-				Director t = modelo.buscarDirector(respuesta);
-				if( t != null)
-				view.printMessage("El promedio calificacion de las peliculas del director es : " + t.promedioCalificacionPeliculas());
+				view.printMessage("Bienvenido, los resultados de las pruebas de desempeño fueron: ");
 				
-			case 6:
-				view.printMessage("Bienvenido, por favor ingrese el nombre del genero a buscar: ");
-				lector.nextLine();
-				respuesta = lector.nextLine();
-				view.printMessage("Lista de peliculas de el director: " + modelo.entenderUnGenero(respuesta));
+				
+				
+				
+				
+				
+				
+				break;
+				//lector.nextLine();
+				//respuesta = lector.nextLine();
+				//ArregloDinamico<Pelicula> a = modelo.conocerUnDirector(respuesta);
+				//for(int i=0; i < a.size();i++)
+				//view.printMessage("Lista de peliculas de el director: " + a.getElement(i).datosBasicos());
+				//view.printMessage("El numero de peliculas del director es: " + a.size());
+				//Director t = modelo.buscarDirector(respuesta);
+				//if( t != null)
+				//view.printMessage("El promedio calificacion de las peliculas del director es : " + t.promedioCalificacionPeliculas());
+				
+				//case 6:
+				//	view.printMessage("Bienvenido, por favor ingrese el nombre del genero a buscar: ");
+				//lector.nextLine();
+				//respuesta = lector.nextLine();
+				//view.printMessage("Lista de peliculas de el director: " + modelo.entenderUnGenero(respuesta));
 				
 
-			case 7:
-				view.printMessage("Hola, ingrese el genero a rankear");
-				lector.nextLine();
-				String gen = lector.nextLine();
-				view.printMessage("Ahora, ingrese el numero de peliculas a rankear");
-				int num2 = lector.nextInt();
-				view.printMessage("Hola, seleccione la opcion para rankear");
-				view.printMessage("Opcion 1: Peores, por promedio de votos.");
-				view.printMessage("Opcion 2: Mejores, por promedio de votos.");
-				view.printMessage("Opcion 3: Peores, por total de votos.");
-				view.printMessage("Opcion 4: Mejores, por total de votos.");
-				int forma2 = lector.nextInt() -1;
-				Lista<Pelicula> ranking2 = modelo.darRankGenero(num2, forma2, gen);
-				if(num2 < 3)
-					for(int i=0; i < ranking2.size();i++)
-					{
-						Pelicula actual = ranking2.getElement(i);
-						String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
-						view.printMessage(laInfo);
-					}
-				else
-				{
-					for(int i=0; i < ranking2.size();i++)
-					{
-						Pelicula actual = ranking2.getElement(i);
-						String laInfo = "Id: " + actual.darId() + "     Total Votos:    " + actual.darVote_count() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
-						view.printMessage(laInfo);
-					}
-				}
+			//case 7:
+				//view.printMessage("Hola, ingrese el genero a rankear");
+				//lector.nextLine();
+				//String gen = lector.nextLine();
+				//view.printMessage("Ahora, ingrese el numero de peliculas a rankear");
+				//int num2 = lector.nextInt();
+				//view.printMessage("Hola, seleccione la opcion para rankear");
+				//view.printMessage("Opcion 1: Peores, por promedio de votos.");
+				//view.printMessage("Opcion 2: Mejores, por promedio de votos.");
+				//view.printMessage("Opcion 3: Peores, por total de votos.");
+				//view.printMessage("Opcion 4: Mejores, por total de votos.");
+				//int forma2 = lector.nextInt() -1;
+				//Lista<Pelicula> ranking2 = modelo.darRankGenero(num2, forma2, gen);
+				//if(num2 < 3)
+				//for(int i=0; i < ranking2.size();i++)
+				//{
+				//	Pelicula actual = ranking2.getElement(i);
+				//	String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+				//	view.printMessage(laInfo);
+				//	}
+				//else
+				//{
+				//	for(int i=0; i < ranking2.size();i++)
+				//{
+				//		Pelicula actual = ranking2.getElement(i);
+				//		String laInfo = "Id: " + actual.darId() + "     Total Votos:    " + actual.darVote_count() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
+				//		view.printMessage(laInfo);
+				//	}
+				//}
 
 
 				//case 4:
@@ -168,5 +208,4 @@ public class Controller {
 		}
 
 	}
-
 }
