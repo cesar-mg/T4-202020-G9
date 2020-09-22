@@ -57,7 +57,38 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 		
 	}
 	
+	public NodoHash<K, V> get(K key) 
+	{
+		int i = 0;
+		NodoHash<K, V> buscado = null;
+		while(i < nodos.size() && buscado == null)
+		{
+			NodoHash<K,V> act = nodos.getElement(i);
+			if(act.getKey().equals(key))
+				buscado = act;
+		}
+		return buscado;
+	}
 	
+	public NodoHash<K, V> remove(K key) 
+	{
+		int i = 0;
+		NodoHash<K, V> buscado = null;
+		while(i < nodos.size() && buscado == null)
+		{
+			NodoHash<K,V> act = nodos.getElement(i);
+			if(act.getKey().equals(key))
+			{
+				buscado = act;
+				nodos.deleteElement(i);
+			}
+		}
+		return null;
+	}
+	public ArregloDinamico<NodoHash<K,V>> getAll()
+	{
+		return nodos;
+	}
 	/**
 	 * No hace nada.
 	 */
@@ -67,4 +98,7 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 		
 		return 0;
 	}
+
+
+	
 }
