@@ -63,6 +63,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		verificarInvariante();
 	}
 
+
 	@Override
 	public V get( K key ) 
 	{
@@ -71,7 +72,6 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		NodoHash<K,V> buscado = bucket.get(key);
 		return buscado == null? null: buscado.getValue();
 	}
-
 
 	@Override
 	public V remove( K key) 
@@ -127,6 +127,11 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		return result;
 	}
 
+	
+	/**
+	 * Retorna una lista con todas los valores almacenados en la Tabla.
+	 * @return Todas los valores almacenados en la Tabla.
+	 */
 	public Lista<V> valueSet() 
 	{
 		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
@@ -146,6 +151,26 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		return result;
 	}
 
+	public Lista<V> valueSet() 
+	{
+		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
+			int j = 0;
+			while(j < temp.size())
+			{
+			result.addLast(temp.getElement(j).getValue());	
+				NodoHash<K,V> tElem = temp.getElement(j);
+				if(tElem != null && tElem.getValue() != null)
+					result.addLast(temp.getElement(j).getValue());	
+			}
+			i++;
+		}
+		return result;
+	}
+	
 	public int getPos(K key)
 	{
 		int hashInicial =  (a * key.hashCode( ) + b) % p ;

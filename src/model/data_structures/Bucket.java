@@ -53,16 +53,18 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 			}
 		}
 		return null;
+
 	}
 	public ArregloDinamico<NodoHash<K,V>> getAll()
 	{
 		return nodos;
 	}
+
 	/**
 	 * No hace nada.
 	 */
 	@Override
-	public int compareTo(Bucket o) 
+	public int compareTo(Bucket<K, V> o) 
 	{
 		
 		return 0;

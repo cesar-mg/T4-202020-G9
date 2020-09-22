@@ -34,11 +34,12 @@ public class NodoHash <K extends Comparable<K>, V > implements Comparable<NodoHa
 	}
 
 	
-	public int compareTo(NodoHash o) 
+	public int compareTo(NodoHash<K, V> o) 
 	{
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void deleteLP() 
 	{
 		key = (K) "EMPTY";
