@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public interface Lista <T extends Comparable<T>> {
+public interface Lista <T extends Comparable<? extends T>> {
 
 	/**
 	 * Retornar el numero de elementos presentes en el arreglo

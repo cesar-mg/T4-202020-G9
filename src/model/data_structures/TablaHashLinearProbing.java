@@ -40,7 +40,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 	 */
 	private int m; 
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	
 	public TablaHashLinearProbing( int size ) 
 	{
 		m = Extras.getNextPrime(2*size);
@@ -48,7 +48,6 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		a  = (int) (Math.random() * (p-1)+1);
 		b  = (int) (Math.random() * (p-1)+1);
 		mapa = new ArregloDinamico<NodoHash<K,V>> (m);
-
 	}
 
 
@@ -58,22 +57,16 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		NodoHash<K,V> act = mapa.getElement(pos);
 		if(act == null)
 		{
-			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
-			arr.addLast(value);
-			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
+			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
 			mapa.changeInfo(pos, nuevo);
+			totalElementos++;
 		}
+		else if(act.getKey().equals(key))
+			act.changeValue(value);
 		else
-		{
-			if(act.getKey().equals(key))
-			{
-				ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
-				datos.addLast(value);
-			}
-			else
-				putRecursiveVersion(pos + 1, key, value);
+			putRecursiveVersion(pos + 1, key, value);
 
-		}
+
 		verificarInvariante();
 	}
 
@@ -84,16 +77,13 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		NodoHash<K,V> act = mapa.getElement(pos);
 		if(act == null)
 		{
-			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
-			arr.addLast(value);
-			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
+			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
 			mapa.changeInfo(pos, nuevo);
+			totalElementos++;
 		}
 		else if(act.getKey().equals(key))
-		{
-			ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
-			datos.addLast(value);
-		}
+			act.changeValue(value);
+		
 		else
 			putRecursiveVersion(pos + 1, key, value);
 	}
@@ -134,10 +124,11 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		{
 			retorno = act.getValue();
 			act.deleteLP();
+			totalElementos--;
 		}
 		else 
 			return deleteRecursiveVersion(pos + 1, key);
-		
+
 		verificarInvariante();
 		return retorno;
 	}
@@ -151,6 +142,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		{
 			V retorno = act.getValue();
 			act.deleteLP();
+			totalElementos--;
 			return retorno;
 		}
 		else if(key.equals("EMPTY") || act.getKey() != null)
@@ -210,17 +202,8 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		{
 			NodoHash<K,V> temp = mapa.getElement(i);
 			if(temp != null)
-			{
-				int j = 0;
-				while(j < m)
-				{
-					ArregloDinamico<V> arr = (ArregloDinamico<V>) temp.getValue();
-					V act = arr.getElement(j);
-					if(act != null)
-						result.addLast(arr.getElement(j));
-				}
-				j++;
-			}
+				result.addLast(temp.getValue());
+			
 			i++;
 		}
 		return result;

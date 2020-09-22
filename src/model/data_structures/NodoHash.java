@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public class NodoHash <K extends Comparable<K>, V extends Comparable<V>> implements Comparable<NodoHash<K,V>>
+public class NodoHash <K extends Comparable<K>, V > implements Comparable<NodoHash<K,V>>
 {
 	/**
 	 * Representa la llave del nodo.
@@ -26,6 +26,11 @@ public class NodoHash <K extends Comparable<K>, V extends Comparable<V>> impleme
 	public V getValue( )
 	{
 		return value;
+	}
+	
+	public void changeValue( V nValue )
+	{
+		value = nValue;
 	}
 
 	

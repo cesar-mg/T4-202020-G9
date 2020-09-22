@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public interface TablaSimbolos <K extends Comparable<K>, V extends Comparable<V>> 
+public interface TablaSimbolos <K extends Comparable<K>, V > 
 {
 	/**
 	 * Agregar una dupla (K, V) a la tabla. Si la llave K existe, se reemplaza su valor asociado. K es unica.

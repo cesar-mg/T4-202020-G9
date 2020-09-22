@@ -9,6 +9,7 @@ import controller.Controller;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Lista;
 import model.data_structures.ListaEncadenada;
+import model.data_structures.TablaHashLinearProbing;
 
 
 /**
@@ -35,6 +36,8 @@ public class Cinema {
 	private ListaEncadenada<Pelicula> lasPeliculas;
 
 	private ListaEncadenada<Director> losDirectores;
+	
+
 	
 	private ArregloDinamico<Actor> actor;
 
