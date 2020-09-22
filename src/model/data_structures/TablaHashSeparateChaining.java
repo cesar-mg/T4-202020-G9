@@ -17,8 +17,8 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	/**
 	 * Representa el arreglo utilizado en el mapa;
 	 */
-	@SuppressWarnings("rawtypes")
-	private ArregloDinamico mapa;
+	
+	private ArregloDinamico<Bucket<K,V>> mapa;
 	
 	/**
 	 * Representa la constante a utilizada en el MAD.
@@ -40,44 +40,44 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	 */
 	private int m; 
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	
 	public TablaHashSeparateChaining( int size ) 
 	{
 		m = Extras.getNextPrime((int) size/5);
 		p = Extras.getNextPrime(m);
 		a  = (int) (Math.random() * (p-1)+1);
 		b  = (int) (Math.random() * (p-1)+1);
-		mapa = new ArregloDinamico (m);
+		mapa = (ArregloDinamico<Bucket<K, V>>) new ArregloDinamico<? extends Bucket> (m);
 		for(int i = 0; i < m;i++)
 		{
-			mapa.changeInfo(i,(Comparable) new ArregloDinamico<NodoHash<K,V>>(5));
+			mapa.changeInfo(i, new Bucket(5));
 		}
 	}
 	
-//	public void put(K key, V value) 
-//	{
-//		int pos = getPos(key);
-//		NodoHash<K,V> act = mapa.getElement(pos);
-//		if(act == null)
-//		{
-//			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
-//			arr.addLast(value);
-//			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
-//			mapa.changeInfo(pos, nuevo);
-//		}
-//		else
-//		{
-//			if(act.getKey().equals(key))
-//			{
-//				ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
-//				datos.addLast(value);
-//			}
-//			else
-//				putRecursiveVersion(pos + 1, key, value);
-//
-//		}
-//		verificarInvariante();
-//	}
+	public void put(K key, V value) 
+	{
+		int pos = getPos(key);
+		Bucket act = mapa.getElement(pos);
+		if(act == null)
+		{
+			ArregloDinamico<V> arr = new ArregloDinamico<>(2);
+			arr.addLast(value);
+			NodoHash<K,V> nuevo = new NodoHash<K,V>(key, (V) arr);
+			mapa.changeInfo(pos, nuevo);
+		}
+		else
+		{
+			if(act.getKey().equals(key))
+			{
+				ArregloDinamico<V> datos = (ArregloDinamico<V>) act.getValue();
+				datos.addLast(value);
+			}
+			else
+				putRecursiveVersion(pos + 1, key, value);
+
+		}
+		verificarInvariante();
+	}
 
 //	private void putRecursiveVersion(int pos, K key, V value)
 //	{
@@ -239,12 +239,6 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	{
 		assert factorDeCarga < 5.0;
 		assert factorDeCarga >= 0;
-	}
-
-	@Override
-	public void put(K key, V value) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
