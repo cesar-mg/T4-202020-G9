@@ -18,7 +18,7 @@ import model.logic.Pelicula;
  * @author Fernando De la Rosa
  *
  */
-public class ArregloDinamico < T extends Comparable<T>> implements Comparable<ArregloDinamico>, Lista<T> {
+public class ArregloDinamico < T extends Comparable<T>> implements Comparable<ArregloDinamico<T>>, Lista<T> {
 
 	/**
 	 * Capacidad maxima del arreglo

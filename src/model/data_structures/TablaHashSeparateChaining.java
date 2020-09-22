@@ -47,7 +47,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		p = Extras.getNextPrime(m);
 		a  = (int) (Math.random() * (p-1)+1);
 		b  = (int) (Math.random() * (p-1)+1);
-		mapa = (ArregloDinamico<Bucket<K, V>>) new ArregloDinamico<? extends Bucket> (m);
+		mapa = new ArregloDinamico<Bucket<K,V>> (m);
 		for(int i = 0; i < m;i++)
 		{
 			mapa.changeInfo(i, new Bucket(5));
