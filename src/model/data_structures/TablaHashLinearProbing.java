@@ -215,7 +215,6 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		return totalElementos;
 	}
 
-	
 	public Lista<K> keySet() 
 	{
 		ArregloDinamico<K> result = new ArregloDinamico<K>(totalElementos);

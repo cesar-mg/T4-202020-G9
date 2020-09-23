@@ -38,7 +38,12 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	/**
 	 * Representa la constante m utilizada en el MAD.
 	 */
-	private int m; 
+	private int m;
+	
+	/**
+	 * Representa el numero de rehash desde que se creo.
+	 */
+	private int nreHash; 
 
 
 	public TablaHashSeparateChaining( int size ) 
@@ -48,6 +53,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		a  = (int) (Math.random() * (p-1)+1);
 		b  = (int) (Math.random() * (p-1)+1);
 		mapa = new ArregloDinamico<Bucket<K,V>> (m);
+		nreHash = 0;
 		for(int i = 0; i < mapa.size();i++)
 		{
 			mapa.changeInfo(i, new Bucket<K,V>(5));
@@ -56,6 +62,8 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 
 	public void put(K key, V value) 
 	{
+		if((darFactorDeCarga() + (1/totalElementos)) >= 5.0)
+			rehash( );
 		int pos = getPos(key);
 		Bucket<K,V> act = mapa.getElement(pos);
 		NodoHash<K,V> nuevo = new NodoHash<K,V>(key, value);
@@ -120,7 +128,7 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 			{
 				NodoHash<K,V> tElem = temp.getElement(j);
 				if(tElem != null && tElem.getKey() != null)
-					result.addLast(temp.getElement(j).getKey());	
+					result.addLast(tElem.getKey());	
 			}
 			i++;
 		}
@@ -144,7 +152,26 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 			{
 				NodoHash<K,V> tElem = temp.getElement(j);
 				if(tElem != null && tElem.getValue() != null)
-					result.addLast(temp.getElement(j).getValue());	
+					result.addLast(tElem.getValue());	
+			}
+			i++;
+		}
+		return result;
+	}
+	
+	public Lista<NodoHash<K,V>> getAll() 
+	{
+		ArregloDinamico<NodoHash<K,V>> result = new ArregloDinamico<NodoHash<K,V>>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
+			int j = 0;
+			while(j < temp.size())
+			{
+				NodoHash<K,V> tElem = temp.getElement(j);
+				if(tElem != null)
+					result.addLast(tElem);	
 			}
 			i++;
 		}
@@ -173,9 +200,39 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 	
 	public int getPos(K key)
 	{
-		int hashInicial =  (a * key.hashCode( ) + b) % p ;
+		int hashInicial =  (a * key.hashCode( ) + b) % p;
 		int hashFinal = Math.abs(hashInicial) % m;
 		return hashFinal;
+	}
+	
+	public double darFactorDeCarga()
+	{
+		return (0.0 + m)/(0.0 + totalElementos);
+	}
+	
+	public void rehash()
+	{
+		nreHash++;
+		m = Extras.getNextPrime((2*m)/5);
+		p = Extras.getNextPrime(m);
+		a  = (int) (Math.random() * (p-1)+1);
+		b  = (int) (Math.random() * (p-1)+1);
+		Lista<NodoHash<K,V>> todo = getAll( );
+		mapa = new ArregloDinamico<Bucket<K,V>>(m);
+		for(int i = 0; i < mapa.size();i++)
+		{
+			mapa.changeInfo(i, new Bucket<K,V>(5));
+		}
+		for(int i = 0; i < todo.size();i++)
+		{
+			NodoHash<K,V> act= todo.getElement(i);
+			put(act.getKey(), act.getValue());
+		}
+	}
+	
+	public int numeroReHash()
+	{
+		return nreHash;
 	}
 
 	private void verificarInvariante( )
