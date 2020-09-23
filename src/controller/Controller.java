@@ -54,7 +54,8 @@ public class Controller {
 					view.printMessage("Los datos de la ultima pelicula en la tabla Linear son: " + modelo.datosBasicosUltimaPeliculatablaLinear());
 				}
 				else {
-					
+					view.printMessage("Los datos de la primera pelicula en la tabla Linear son: " + modelo.datosBasicosPrimeraPeliculatablaSeparate());
+					view.printMessage("Los datos de la ultima pelicula en la tabla Linear son: " + modelo.datosBasicosUltimaPeliculatablaSeparate());
 				}
 				
 				break;

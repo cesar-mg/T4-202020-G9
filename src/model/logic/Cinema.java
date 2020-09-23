@@ -184,6 +184,22 @@ public class Cinema {
 		return peliculasCo;
 		
 	}
+	
+	public ArregloDinamico<Pelicula> peliculasPorCompañiaAñoSeparate (String llave){
+		ArregloDinamico<Pelicula> peliculasCo = new ArregloDinamico<>(500);
+		if(tablaSeparate.contains(llave)){
+			ArregloDinamico<Pelicula> valor = tablaSeparate.get(llave); 
+			for(int i = 0; i< valor.size();i++){
+				Pelicula actual = valor.getElement(i);
+				peliculasCo.addLast(actual);
+			}
+		}
+		else if(tablaLinear.contains(llave)==false){
+			 return peliculasCo;
+		}
+		return peliculasCo;
+		
+	}
 
 
 	public Director buscarDirector (String p)
