@@ -4,6 +4,8 @@ import model.logic.Extras;
 
 public class TablaHashLinearProbing < K extends Comparable<K>, V extends Comparable<V>> implements TablaSimbolos<K, V> 
 {
+	
+	
 	/**
 	 * Representa el factor de carga actual.
 	 */
@@ -38,9 +40,17 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 	/**
 	 * Representa la constante m utilizada en el MAD.
 	 */
-	private int m; 
-
+	private int m;
 	
+	/**
+	 * Representa el numero de rehash desde que se creo.
+	 */
+	private int nreHash; 
+
+	/**
+	 * Constructor onstructor de la clase.
+	 * @param size. Tamano inicial de la clase.
+	 */
 	public TablaHashLinearProbing( int size ) 
 	{
 		m = Extras.getNextPrime(2*size);
@@ -50,9 +60,15 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		mapa = new ArregloDinamico<NodoHash<K,V>> (m);
 	}
 
-
+	/**
+	 * Mete un elemento al mapa.
+	 * @param key. LLave del nodo.
+	 * @param value. Valor del nodo.
+	 */
 	public void put(K key, V value) 
 	{
+		if((darFactorDeCarga() + (1/totalElementos)) >= 0.75)
+			rehash( );
 		int pos = getPos(key);
 		NodoHash<K,V> act = mapa.getElement(pos);
 		if(act == null || act.getKey().equals("EMPTY"))
@@ -70,6 +86,12 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		verificarInvariante();
 	}
 
+	/**
+	 * Mete un elemento al mapa recursivamente.
+	 * @param pos. Posicion actual a revisar.
+	 * @param key. LLave del nodo.
+	 * @param value. Valor del nodo.
+	 */
 	private void putRecursiveVersion(int pos, K key, V value)
 	{
 		if(pos >= (m - 1))
@@ -83,12 +105,14 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		}
 		else if(act.getKey().equals(key))
 			act.changeValue(value);
-		
 		else
 			putRecursiveVersion(pos + 1, key, value);
 	}
 
-
+	/**
+	 * Busca un elemento del mapa.
+	 * @param key. LLave del nodo.
+	 */
 	@Override
 	public V get( K key ) 
 	{
@@ -100,6 +124,10 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 			return getRecursiveVersion(pos + 1, key);
 	}
 
+	/**
+	 * Busca un elemento del mapa recursivamente.
+	 * @param key. LLave del nodo.
+	 */
 	private V getRecursiveVersion(int pos, K key) 
 	{
 		if(pos >= (m-1))
@@ -113,7 +141,10 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 			return null; 
 	}
 
-
+	/**
+	 * Elimina un elemento del mapa.
+	 * @param key. LLave del nodo.
+	 */
 	@Override
 	public V remove( K key) 
 	{
@@ -133,6 +164,10 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		return retorno;
 	}
 
+	/**
+	 * Elimina un elemento del mapa recursivamente.
+	 * @param key. LLave del nodo.
+	 */
 	private V deleteRecursiveVersion(int pos, K key) 
 	{
 		if(pos >= (m-1))
@@ -151,7 +186,11 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 			return null; 
 	}
 
-
+	/**
+	 * Busca un elemento en el mapa.
+	 * @param key. LLave del nodo.
+	 * @return true si esta, false de lo contrario.
+	 */
 	@Override
 	public boolean contains( K key) 
 	{
@@ -176,6 +215,7 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 		return totalElementos;
 	}
 
+	
 	public Lista<K> keySet() 
 	{
 		ArregloDinamico<K> result = new ArregloDinamico<K>(totalElementos);
@@ -205,6 +245,46 @@ public class TablaHashLinearProbing < K extends Comparable<K>, V extends Compara
 				result.addLast(temp.getValue());	
 			
 			i++;
+		}
+		return result;
+	}
+	
+	public double darFactorDeCarga()
+	{
+		return (0.0 + m)/(0.0 + totalElementos);
+	}
+	
+	public void rehash()
+	{
+		nreHash++;
+		m = Extras.getNextPrime((2*m)/5);
+		p = Extras.getNextPrime(m);
+		a  = (int) (Math.random() * (p-1)+1);
+		b  = (int) (Math.random() * (p-1)+1);
+		Lista<NodoHash<K,V>> todo = getAll( );
+		mapa = new ArregloDinamico<NodoHash<K,V>>(m);
+		for(int i = 0; i < todo.size();i++)
+		{
+			NodoHash<K,V> act= todo.getElement(i);
+			put(act.getKey(), act.getValue());
+		}
+	}
+	
+	public int numeroReHash()
+	{
+		return nreHash;
+	}
+	
+	
+	public Lista<NodoHash<K,V>> getAll() 
+	{
+		ArregloDinamico<NodoHash<K,V>> result = new ArregloDinamico<NodoHash<K,V>>(totalElementos);
+		int i = 0;
+		while(i < m)
+		{
+			NodoHash<K,V> temp = mapa.getElement(i);
+			if(temp != null)
+				result.addLast(temp);	
 		}
 		return result;
 	}
