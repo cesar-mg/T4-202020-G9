@@ -3,16 +3,17 @@ package model.data_structures;
 public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implements Comparable<Bucket<K,V>>
 {
 	private ArregloDinamico<NodoHash<K,V>> nodos;
-	
+	private int m;
 	public Bucket(int size)
 	{
+		m = size;
 		nodos = new ArregloDinamico<NodoHash<K,V>>(size);
 	}
 	
 	public void addToBucket(NodoHash<K,V> nodo)
 	{
-		int i = 0;
-		while(i < nodos.size( ) && nodos.getElement(i) != null)
+		int i = 1;
+		while(i <= m && nodos.getElement(i) != null)
 		{
 			if(nodo.getKey( ).equals(nodos.getElement(i).getKey()))
 			{
@@ -21,16 +22,16 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 			}
 			i++;
 		}
-		if(i < nodos.size())
+		if(i <= m)
 			nodos.addLast(nodo);
 		
 	}
 	
 	public NodoHash<K, V> get(K key) 
 	{
-		int i = 0;
+		int i = 1;
 		NodoHash<K, V> buscado = null;
-		while(i < nodos.size() && buscado == null)
+		while(i <= m && buscado == null)
 		{
 			NodoHash<K,V> act = nodos.getElement(i);
 			if(act != null && act.getKey().equals(key))
@@ -41,9 +42,9 @@ public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implement
 	
 	public NodoHash<K, V> remove(K key) 
 	{
-		int i = 0;
+		int i = 1;
 		NodoHash<K, V> buscado = null;
-		while(i < nodos.size() && buscado == null)
+		while(i <= m && buscado == null)
 		{
 			NodoHash<K,V> act = nodos.getElement(i);
 			if(act != null && act.getKey().equals(key))

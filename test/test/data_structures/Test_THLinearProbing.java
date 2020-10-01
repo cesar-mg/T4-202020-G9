@@ -24,8 +24,6 @@ public class Test_THLinearProbing
 	@Test
 	public void put( ) 
 	{
-		//Revisa como hacer que key y value sean "A10" Y "Revisar1"
-		
 		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
 		prueba.put("A10",act);
 		NodoHash<String,String> buscado = prueba.get("A10");
@@ -44,48 +42,53 @@ public class Test_THLinearProbing
 		}
 	}
 
-//	@Test
-//	public void Vremove( )
-//	{
-//		NodoHash<String,String> verificar = new  NodoHash<String,String>("p","Revisar");
-//		prueba.changeInfo(1, verificar);
-//		if(prueba.getElement(1).getKey().equals("p"))
-//		{
-//			prueba.getElement(1).deleteLP();
-//		}
-//		assertTrue(prueba.getElement(1) == null);
-//		
-//	}
-//
-//	@Test
-//	public void contains( ) 
-//	{
-//		NodoHash<String,String> r = new  NodoHash<String,String>("r","Revisar3");
-//		prueba.changeInfo(24 , r);
-//		boolean encontrado = false;
-//		for(int i=1; i<=prueba.size() || !encontrado; i++)
-//		{
-//			if(prueba.getElement(i).equals(r))
-//			{
-//				encontrado = true; 
-//			}
-//		}
-//		assertTrue(encontrado == true);
-//	}
+	@Test
+	public void Vremove( )
+	{
+		NodoHash<String,String> verificar = new  NodoHash<String,String>("p","Revisar");
+		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
+		prueba.put("A10",act);
+		prueba.remove("A10");
+		assertNull(prueba.get("A10"));
+		
+	}
+
+	@Test
+	public void contains( ) 
+	{
+		NodoHash<String,String> verificar = new  NodoHash<String,String>("p","Revisar");
+		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
+		prueba.put("A10",act);
+		prueba.remove("A10");
+		assertFalse(prueba.contains("A10"));
+	}
 
 	@Test
 	public void isEmpty() 
 	{
-		assertTrue(prueba.size() == 0);		
+		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
+		prueba.put("A10",act);
+		assertFalse(prueba.isEmpty());	
+		prueba.remove("A10");
+		assertTrue(prueba.isEmpty());		
 	}
 
 	@Test
 	public void size() 
 	{
-		//TODO
+		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
+		prueba.put("A10",act);
+		assertTrue(prueba.size()==1);	
+		prueba.remove("A10");
+		assertTrue(prueba.size() ==0);		
 	}
-
-
-	
-
+	@Test
+	public void rehash()
+	{
+		NodoHash<String,String> act = new NodoHash<String,String>("A10","Revisar1");
+		prueba.put("A10",act);
+		prueba.rehash();
+		assertTrue(prueba.contains("A10"));
+		assertTrue(prueba.size() == 1 );
+	}
 }
