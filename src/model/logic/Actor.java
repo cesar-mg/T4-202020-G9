@@ -57,7 +57,7 @@ public class Actor implements Comparable <Actor>
 		double calificacion = 0;
 		for(int i=0; i<participacion.size(); i++)
 		{
-			Pelicula r = participacion.getElement(i);
+			Pelicula r = participacion.getElement(i+1);
 			if(r.darVote_average() >= 0)
 			{
 				calificacion += r.darVote_average();
@@ -74,7 +74,7 @@ public class Actor implements Comparable <Actor>
 		ArrayList<String> director = new ArrayList<>();
 		for(int i=0; i<director.size();i++)
 		{
-			Pelicula temp = participacion.darElemento(i);
+			Pelicula temp = participacion.getElement(i+1);
 			if(temp.darCasting().directorName() != null)
 			{
 				director.add(temp.darCasting().directorName());

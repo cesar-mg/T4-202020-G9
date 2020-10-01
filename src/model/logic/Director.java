@@ -48,7 +48,7 @@ public class Director implements Comparable<Director>
 		double promedio= 0;
 		int contador = peliculas.size();
 		for(int i=0; i < peliculas.size();i++){
-			Pelicula actual = peliculas.darElemento(i);
+			Pelicula actual = peliculas.getElement(i+1);
 			promedio += actual.darVote_average();
 		}
 		return promedio / contador;

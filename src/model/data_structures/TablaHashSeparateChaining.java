@@ -134,30 +134,6 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		}
 		return result;
 	}
-
-	
-	/**
-	 * Retorna una lista con todas los valores almacenados en la Tabla.
-	 * @return Todas los valores almacenados en la Tabla.
-	 */
-	public Lista<V> valueSet() 
-	{
-		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
-		int i = 0;
-		while(i < m)
-		{
-			ArregloDinamico<NodoHash<K,V>> temp = mapa.getElement(i).getAll();
-			int j = 0;
-			while(j < temp.size())
-			{
-				NodoHash<K,V> tElem = temp.getElement(j);
-				if(tElem != null && tElem.getValue() != null)
-					result.addLast(tElem.getValue());	
-			}
-			i++;
-		}
-		return result;
-	}
 	
 	public Lista<NodoHash<K,V>> getAll() 
 	{
@@ -177,7 +153,11 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Retorna una lista con todas los valores almacenados en la Tabla.
+	 * @return Todas los valores almacenados en la Tabla.
+	 */
 	public Lista<V> valueSet() 
 	{
 		ArregloDinamico<V> result = new ArregloDinamico<V>(totalElementos);
@@ -188,10 +168,9 @@ public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comp
 			int j = 0;
 			while(j < temp.size())
 			{
-			result.addLast(temp.getElement(j).getValue());	
 				NodoHash<K,V> tElem = temp.getElement(j);
 				if(tElem != null && tElem.getValue() != null)
-					result.addLast(temp.getElement(j).getValue());	
+					result.addLast(tElem.getValue());	
 			}
 			i++;
 		}

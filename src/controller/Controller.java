@@ -31,13 +31,14 @@ public class Controller {
 
 	public void run() 
 	{
+		long t = System.currentTimeMillis();
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
 		int dato = -1;
 		String respuesta = "";
-		modelo = new Cinema(4000); 
+		modelo = new Cinema(2000); 
 		modelo.CargarArchivosTablas();
-
+		System.out.println(System.currentTimeMillis()-t);
 		while( !fin ){
 			view.printMenu();
 
@@ -46,10 +47,10 @@ public class Controller {
 			case 1:
 
 				view.printMessage("Bienvenido,de que tabla quiere los datos iniciales:");
-				view.printMessage("Opcion 1: TablaHash Linear Probbing.");
+				view.printMessage("Opcion 1: TablaHash Linear Probing.");
 				view.printMessage("Opcion 2: TablaHash Separate Chaining.");
 				int opc = lector.nextInt();
-				if(opc<2){
+				if(opc < 2){
 					view.printMessage("Los datos de la primera pelicula en la tabla Linear son: " + modelo.datosBasicosPrimeraPeliculatablaLinear());
 					view.printMessage("Los datos de la ultima pelicula en la tabla Linear son: " + modelo.datosBasicosUltimaPeliculatablaLinear());
 				}
@@ -57,14 +58,14 @@ public class Controller {
 					view.printMessage("Los datos de la primera pelicula en la tabla Linear son: " + modelo.datosBasicosPrimeraPeliculatablaSeparate());
 					view.printMessage("Los datos de la ultima pelicula en la tabla Linear son: " + modelo.datosBasicosUltimaPeliculatablaSeparate());
 				}
-				
+
 				break;
 
 
 
 			case 2:
 
-				
+
 				view.printMessage("Bienvenido, por favor ingrese el nombre y año de la compañia a buscar: ");
 				lector.nextLine();
 				respuesta = lector.nextLine();
@@ -75,13 +76,13 @@ public class Controller {
 					view.printMessage(laInfo);
 					view.printMessage("El numero total de peliculas es : " + pelis.size());
 				}
-				
+
 				break;
 
 
 			case 3:
-				
-				
+
+
 				view.printMessage("Bienvenido, por favor ingrese el nombre y año de la compañia a buscar: ");
 				lector.nextLine();
 				respuesta = lector.nextLine();
@@ -92,7 +93,7 @@ public class Controller {
 					view.printMessage(laInfo);
 					view.printMessage("El numero total de peliculas es : " + pelisSeparate.size());
 				}
-				
+
 				break;
 
 				//view.printMessage("Hola, seleccione el numero de peliculas a rankear");
@@ -109,10 +110,10 @@ public class Controller {
 				//for(int i=0; i < ranking.size();i++)
 				//{
 				//	Pelicula actual = ranking.getElement(i);
-						
+
 				//String laInfo = "Id: " + actual.darId() + "     Promedio Votación:    " + actual.darVote_average() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
 				//view.printMessage(laInfo);
-			
+
 				//	}
 				//}
 				//else
@@ -121,22 +122,40 @@ public class Controller {
 				//{
 				//	Pelicula actual = ranking.getElement(i);
 				//	String laInfo = "Id: " + actual.darId() + "     Total Votos:    " + actual.darVote_count() + "     Titulo: " + actual.darTitle() + "    Generos: " + actual.darGeneros() + "    Fecha de salida:  " + actual.darRelease_date() + actual.darCasting().castingNombres();
-						//	view.printMessage(laInfo);
+				//	view.printMessage(laInfo);
 				//}
 				//}
-	
-				
+
+
 			case 4:
 				view.printMessage("Bienvenido, los resultados de las pruebas de desempeño fueron: ");
-				
-				
-				
-				
-				
-				
-				
+
+			case 5:
+				modelo.CargarArchivosArreglo();
+				view.printMessage("Bienvenido, por favor ingrese el nombre del genero a buscar: ");
+				lector.nextLine();
+				respuesta = lector.nextLine();
+				System.out.println(modelo.entenderUnGenero(respuesta));
+
 				break;
-				//lector.nextLine();
+
+			case 6:
+				view.printMessage("Bienvenido, por favor ingrese el nombre del genero a buscar: ");
+				lector.nextLine();
+				respuesta = lector.nextLine();
+				System.out.println(modelo.entenderUnGeneroHL(respuesta));
+
+				break;
+
+			case 7:
+				view.printMessage("Bienvenido, por favor ingrese el nombre del pais a buscar: ");
+				lector.nextLine();
+				respuesta = lector.nextLine();
+				System.out.println(modelo.entenderUnPaisHL(respuesta));
+
+				break;
+
+				//lector.nextLine();*
 				//respuesta = lector.nextLine();
 				//ArregloDinamico<Pelicula> a = modelo.conocerUnDirector(respuesta);
 				//for(int i=0; i < a.size();i++)
@@ -145,15 +164,15 @@ public class Controller {
 				//Director t = modelo.buscarDirector(respuesta);
 				//if( t != null)
 				//view.printMessage("El promedio calificacion de las peliculas del director es : " + t.promedioCalificacionPeliculas());
-				
+
 				//case 6:
 				//	view.printMessage("Bienvenido, por favor ingrese el nombre del genero a buscar: ");
 				//lector.nextLine();
 				//respuesta = lector.nextLine();
 				//view.printMessage("Lista de peliculas de el director: " + modelo.entenderUnGenero(respuesta));
-				
 
-			//case 7:
+
+				//case 7:
 				//view.printMessage("Hola, ingrese el genero a rankear");
 				//lector.nextLine();
 				//String gen = lector.nextLine();

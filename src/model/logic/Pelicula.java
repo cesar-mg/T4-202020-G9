@@ -51,6 +51,35 @@ public class Pelicula implements Comparable<Pelicula>
 		cast = nCast;
 		
 	}
+	public Pelicula(int parseInt, String pPresupuesto, String pGeneros, String pImdb_id, String pLenguajeOriginal,
+			String pTituloOriginal, String pDescripcion, String pPopularidad, String pCompaniasProductoras,
+			String pProduction_countries, String pRelease_date, String pRevenue, String pRuntime,
+			String pSpoken_languages, String pStatus, String pTagline, String pTitle, String string, String string2,
+			String pProduction_companies_number, String pSpoken_languages_number, Casting nCast)
+	{
+		id = 2; 
+		presupuesto = pPresupuesto;
+		generos = pGeneros;
+		imdb_id = pImdb_id;
+		lenguajeOriginal = pLenguajeOriginal;
+		tituloOriginal = pTituloOriginal;
+		descripcion = pDescripcion;
+		popularidad = pPopularidad;
+		companiasProductoras = pCompaniasProductoras;
+		production_countries = pProduction_countries;
+		release_date = pRelease_date;
+		revenue = pRevenue;
+		runtime = pRuntime;
+		spoken_languages = pSpoken_languages;
+		status = pStatus;
+		tagline = pTagline;
+		title = pTitle;
+		vote_average = 586;
+		vote_count = 254;
+		production_companies_number = pProduction_companies_number;
+		spoken_languages_number = pSpoken_languages_number;
+		cast = nCast;
+	}
 	public int darId()
 	{
 		return id;
@@ -233,6 +262,11 @@ public class Pelicula implements Comparable<Pelicula>
 	public String datosBasicos( )
 	{
 		return ""+ id + ", "+ title + ", " + generos + ", " + release_date + ", " + cast.castingNombres() ;
+	}
+	
+	public String datosFormato2( )
+	{
+		return "Titulo: " + title + ", Año: " + release_date + ", Director: " + cast.directorName()  ;
 	}
 
 
