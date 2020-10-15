@@ -1,6 +1,4 @@
-package model.data_structures;
-
-import model.logic.Extras;
+package estructuras_de_datos;
 
 public class TablaHashSeparateChaining < K extends Comparable<K>, V extends Comparable<V>> implements TablaSimbolos<K, V> 
 {

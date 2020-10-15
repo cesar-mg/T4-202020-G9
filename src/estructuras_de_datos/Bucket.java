@@ -1,4 +1,5 @@
-package model.data_structures;
+package estructuras_de_datos;
+
 
 public class Bucket< K extends Comparable<K>, V extends Comparable<V>> implements Comparable<Bucket<K,V>>
 {

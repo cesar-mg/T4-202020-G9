@@ -1,4 +1,4 @@
-package model.data_structures;
+package estructuras_de_datos;
 
 public class NodoHash <K extends Comparable<K>, V > implements Comparable<NodoHash<K,V>>
 {

@@ -1,14 +1,12 @@
-package test.data_structures;
-
+package testED;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.data_structures.NodoHash;
-import model.data_structures.TablaHashLinearProbing;
-
+import estructuras_de_datos.NodoHash;
+import estructuras_de_datos.TablaHashLinearProbing;
 
 public class Test_THLinearProbing 
 {

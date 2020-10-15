@@ -1,14 +1,4 @@
-package model.data_structures;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
-import model.logic.Pelicula;
+package estructuras_de_datos;
 
 
 /**
@@ -153,10 +143,6 @@ public class ArregloDinamico < T extends Comparable<T>> implements Comparable<Ar
 	{
 		return elementos[0] == null?true:false;
 
-	}
-	public int isPresentBinary (T element) 
-	{
-		return Arrays.binarySearch(elementos, element);
 	}
 
 	public int isPresent (T element) 

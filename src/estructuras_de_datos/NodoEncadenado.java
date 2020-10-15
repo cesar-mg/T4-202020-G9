@@ -1,4 +1,4 @@
-package model.data_structures;
+package estructuras_de_datos;
 
 public class NodoEncadenado <T extends Comparable<T>> 
 {

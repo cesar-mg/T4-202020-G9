@@ -1,5 +1,4 @@
-package model.logic;
-import model.data_structures.Lista;
+package estructuras_de_datos;
 
 public class Extras  <T extends Comparable<T>> {
 

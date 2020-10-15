@@ -1,6 +1,4 @@
-package model.data_structures;
-
-import model.logic.Extras;
+package estructuras_de_datos;
 
 public class TablaHashLinearProbing < K extends Comparable<K>, V extends Comparable<V>> implements TablaSimbolos<K, V> 
 {

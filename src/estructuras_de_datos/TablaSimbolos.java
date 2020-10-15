@@ -1,4 +1,4 @@
-package model.data_structures;
+package estructuras_de_datos;
 
 public interface TablaSimbolos <K extends Comparable<K>, V extends Comparable<V>> 
 {

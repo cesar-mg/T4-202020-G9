@@ -1,21 +1,25 @@
-package test.data_structures;
+package testED;
 
-import model.data_structures.ArregloDinamico;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import estructuras_de_datos.ArregloDinamico;
 public class TestArregloDinamico {
 
-	private ArregloDinamico arreglo;
+	private ArregloDinamico<String> arreglo;
 	private static int TAMANO=100;
 	
 	@Before
 	public void setUp1()
 	{
-		arreglo= new ArregloDinamico(TAMANO);
+		arreglo= new ArregloDinamico<String>(TAMANO);
 	}
 
 	public void setUp2() 
@@ -53,9 +57,7 @@ public class TestArregloDinamico {
 		for(int i = 1; i < 15; i++)
 			assertTrue(Integer.parseInt((String) arreglo.getElement(i+1)) > Integer.parseInt((String) arreglo.getElement(i)));
 		arreglo.addFirst("a");
-		assertEquals("a",arreglo.getElement(1));
-		
-		
+		assertEquals("a",arreglo.getElement(1));	
 	}
 
 	@Test
@@ -137,12 +139,6 @@ public class TestArregloDinamico {
 		assertTrue(arreglo.isEmpty());
 		arreglo.addFirst("0");
 		assertFalse(arreglo.isEmpty());
-	
-	}
-	@Test
-	public void testIsPresentBinary ( ) 
-	{
-		
 	}
 
 	@Test
@@ -152,7 +148,6 @@ public class TestArregloDinamico {
 		setUp2();
 		assertEquals(194, arreglo.isPresent("195"));
 		assertEquals(122, arreglo.isPresent("123"));
-
 	}
 	@Test
 	public void testExchange ( )
@@ -161,7 +156,6 @@ public class TestArregloDinamico {
 		arreglo.exchange(1, 199);
 		assertEquals("1", arreglo.getElement(199));
 		assertEquals("199", arreglo.getElement(1));
-		
 	}
 
 	@Test
@@ -172,7 +166,6 @@ public class TestArregloDinamico {
 		assertEquals("a", arreglo.getElement(1));
 		arreglo.changeInfo(17,"r");
 		assertEquals("r", arreglo.getElement(17));
-	
 	}
 
 }

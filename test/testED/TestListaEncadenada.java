@@ -1,21 +1,23 @@
-package test.data_structures;
-
-
-import model.data_structures.ListaEncadenada;
-
-import static org.junit.Assert.*;
+package testED;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import estructuras_de_datos.ListaEncadenada;
+
+
 public class TestListaEncadenada {
 
-	private ListaEncadenada lista;
+	private ListaEncadenada<String> lista;
 	
 	@Before
 	public void setUp1()
 	{
-		lista= new ListaEncadenada( );
+		lista= new ListaEncadenada<String>( );
 	}
 
 	public void setUp2() 
