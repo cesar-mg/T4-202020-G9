@@ -1,6 +1,6 @@
 package estructuras_de_datos;
 
-public class BST<K extends Comparable<K>, V extends Comparable <V>> implements TablaSimbolosOrdenada<K, V> 
+public class RBT<K extends Comparable<K>, V extends Comparable <V>> implements TablaSimbolosOrdenada<K, V> 
 {
 
 	/**
@@ -16,7 +16,7 @@ public class BST<K extends Comparable<K>, V extends Comparable <V>> implements T
 	/**
 	 * Metodo constructor.
 	 */
-	public BST() 
+	public RBT() 
 	{
 		raiz = null;
 		tamanoActual = 0;
